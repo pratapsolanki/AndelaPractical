@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/convertCurrencyFragment">
+
+    <fragment
+        android:id="@+id/convertCurrencyFragment"
+        android:name="com.andela.practical.presentation.convert_currency.ConvertCurrencyFragment"
+        android:label="fragment_convert_currency"
+        tools:layout="@layout/fragment_convert_currency" >
+        <action
+            android:id="@+id/action_convertCurrencyFragment_to_historicDataFragment"
+            app:restoreState="false"
+            app:destination="@id/historicDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historicDataFragment"
+        android:name="com.andela.practical.presentation.histric_data.HistoricDataFragment"
+        android:label="fragment_historic_data"
+        tools:layout="@layout/fragment_historic_data" >
+        <argument
+            android:name="ExchangeCurrencyResult"
+            app:argType="string" />
+        <argument
+            android:name="ExchangeBaseCurrency"
+            app:argType="string" />
+        <argument
+            android:name="toCurrency"
+            app:argType="string" />
+        <argument
+            android:name="fromCurrency"
+            app:argType="string" />
+    </fragment>
+</navigation>
