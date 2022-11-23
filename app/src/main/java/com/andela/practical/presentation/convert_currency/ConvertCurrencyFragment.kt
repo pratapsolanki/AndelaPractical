@@ -78,28 +78,22 @@ class ConvertCurrencyFragment : Fragment() {
             if (swipe) {
                 swipe = false
                 currencySymbols.let {
-                    val pos = fromCurrencySelectedPos
-                    binding.fromCurrencySpinner.setText(
-                        currencySymbols[toCurrencySelectedPos],
-                        false
-                    )
-                    binding.toCurrencySpinner.setText(currencySymbols[pos], false)
+                    if (fromCurrencySelectedPos != -1) {
+                        var id = fromCurrencySelectedPos
+                        binding.fromCurrencySpinner.setText(currencySymbols[toCurrencySelectedPos],false)
+                        binding.toCurrencySpinner.setText(currencySymbols[id],false)
+                    }
+
                 }
 
             } else {
                 swipe = true
-                currencySymbols.let {
-                    val pos = toCurrencySelectedPos
-
-                    binding.fromCurrencySpinner.setText(
-                        currencySymbols[toCurrencySelectedPos],
-                        false
-                    )
-                    binding.toCurrencySpinner.setText(
-                        currencySymbols[pos],
-                        false
-                    )
+                if (toCurrencySelectedPos != -1) {
+                    var id = toCurrencySelectedPos
+                    binding.toCurrencySpinner.setText(currencySymbols[fromCurrencySelectedPos],false)
+                    binding.fromCurrencySpinner.setText(currencySymbols[id],false)
                 }
+
 
             }
         }
