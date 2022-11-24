@@ -15,8 +15,8 @@
 
   </tr>
   <tr>
-    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/master/results/1.png"></td>
-    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/master/results/2.png"></td>
+    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/1.png" ></td>
+    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/2.png"></td>
   </tr>
     <tr>
     <td>Sprint 1: FF-1</td>
@@ -24,8 +24,8 @@
 
   </tr>
    <tr>
-    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/master/results/3.png"></td>
-    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/master/results/4.png"></td>
+    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/3.png"></td>
+    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/4.png"></td>
 
   </tr>
    <tr>
@@ -34,8 +34,8 @@
 
   </tr>
   <tr>
-    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/master/results/5.png"></td>
-     <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/master/results/6.png"></td>
+    <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/5.png"></td>
+     <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/6.png"></td>
   </tr>
   </table>
 
