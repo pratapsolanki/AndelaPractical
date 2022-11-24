@@ -1,20 +1,17 @@
 package com.andela.practical.presentation.history
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andela.practical.databinding.FragmentHistoryBinding
 import com.andela.practical.domain.models.Currency
 import com.andela.practical.domain.models.History
-import com.andela.practical.presentation.histric_data.HistoryDataViewModel
-import com.andela.practical.util.Logger
-import com.andela.practical.util.Resource
-import com.andela.practical.util.toast
+import com.andela.practical.presentation.history_data.HistoryDataViewModel
+import com.andela.practical.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -25,7 +22,13 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HistoryDataViewModel by viewModels()
     lateinit var articleAdapter: HistoryAdapter
+    private var baseCurrency: String = ""
 
+    companion object {
+        fun newInstance(baseCurrency: String) = HistoryFragment().apply {
+            this.baseCurrency = baseCurrency
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,21 +44,25 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val (formattedCurrentDay, formattedLastDay) = dateHandling()
-        iniRecyclerview()
-        viewModel.getHistory(formattedLastDay, formattedCurrentDay)
-        bindObserver()
-    }
-
-    private fun dateHandling(): Pair<String, String> {
         val current = LocalDateTime.now()
-        val lastDay = LocalDateTime.now().minusDays(3)
+        val lastDay = LocalDateTime.now().minusDays(2)
         val formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd")
         val formattedCurrentDay = current.format(formatter)
         val formattedLastDay = lastDay.format(formatter)
         Logger.d("$formattedCurrentDay $formattedLastDay")
-        return Pair(formattedCurrentDay, formattedLastDay)
+        iniRecyclerview()
+        if (requireContext().isNetworkAvailable()) {
+            bindObserver()
+
+            viewModel.getHistory(baseCurrency, formattedLastDay, formattedCurrentDay)
+            bindObserver()
+        } else {
+            binding.progressBar.gone()
+            requireContext().toast("No Internet")
+        }
+
     }
+
 
     private fun iniRecyclerview() {
         articleAdapter = HistoryAdapter()
@@ -69,27 +76,29 @@ class HistoryFragment : Fragment() {
         viewModel.observeHistoryLiveData().observe(requireActivity()) {
             when (it) {
                 is Resource.Loading -> {
+                    binding.progressBar.visible()
 
                 }
                 is Resource.Success -> {
-
+                    binding.progressBar.gone()
                     it.data?.let {
                         val temp: ArrayList<History> = ArrayList()
-                        it.rates.forEach { (k, v) ->
+                        it.quotes.forEach { (k, v) ->
                             val data: ArrayList<Currency> = ArrayList()
                             val date: String = k
                             v.forEach { (k, v) ->
                                 data.add(Currency(k, v))
                             }
                             temp.add(History(date, data))
-                            Logger.d("Sized of" + temp.size.toString())
+                            Logger.d("Size " + temp.size.toString())
 
                         }
-                        Logger.d("Sized of" + temp.size.toString())
+                        Logger.d("Size" + temp.size.toString())
                         articleAdapter.setData(temp)
                     }
                 }
                 is Resource.Error -> {
+                    binding.progressBar.gone()
                     it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
                 }
             }

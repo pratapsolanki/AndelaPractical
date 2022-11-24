@@ -9,6 +9,9 @@ import com.andela.practical.R
 import com.andela.practical.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Consumer - can access all the class from the container
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

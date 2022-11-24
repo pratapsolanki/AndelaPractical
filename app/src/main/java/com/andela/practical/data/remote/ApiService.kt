@@ -11,11 +11,11 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface ApiService {
-    @Headers("apikey: G41tAZ8pnPfB2q5id9H8HqTufMAwCMxZ")
+    @Headers("apikey: ${ApiConstants.KEY}")
     @GET(ApiConstants.ALL_SYMBOL)
     suspend fun getALLCurrencySymbol(): Response<Symbol>
 
-    @Headers("apikey: G41tAZ8pnPfB2q5id9H8HqTufMAwCMxZ")
+    @Headers("apikey: ${ApiConstants.KEY}")
     @GET(ApiConstants.CONVERT)
     suspend fun getConvert(
         @Query("to") to: String,
@@ -24,15 +24,19 @@ interface ApiService {
     ): Response<ConvertResult>
 
 
-    @Headers("apikey: G41tAZ8pnPfB2q5id9H8HqTufMAwCMxZ")
-    @GET(ApiConstants.TIMESERIES)
+    @Headers("apikey: ${ApiConstants.KEY}")
+    @GET(ApiConstants.TIME_SERIES)
     suspend fun getThreeDayHistory(
+        @Query("source") source: String,
         @Query("start_date") start_date: String,
         @Query("end_date") end_date: String
     ): Response<HistoryData>
 
 
-    @Headers("apikey: G41tAZ8pnPfB2q5id9H8HqTufMAwCMxZ")
-    @GET("https://api.apilayer.com/currency_data/live?source=USD&currencies=EUR%2CAED%2CAFN")
-    suspend fun getCurrency(): Response<OtherCurrency>
+    @Headers("apikey: ${ApiConstants.KEY}")
+    @GET(ApiConstants.OTHER_CURRENCY)
+    suspend fun getCurrency(
+        @Query("source") source: String,
+        @Query("currencies") currencies: String
+    ): Response<OtherCurrency>
 }

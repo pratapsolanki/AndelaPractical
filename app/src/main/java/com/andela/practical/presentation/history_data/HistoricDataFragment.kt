@@ -1,4 +1,4 @@
-package com.andela.practical.presentation.histric_data
+package com.andela.practical.presentation.history_data
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.andela.practical.databinding.FragmentHistoricDataBinding
-import com.andela.practical.presentation.MainActivity
 import com.andela.practical.presentation.convert_currency.ViewPagerAdapter
+import com.andela.practical.util.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
+
+/**
+ * Consumer - can access all the class from the container
+ */
 @AndroidEntryPoint
 class HistoricDataFragment : Fragment() {
-    private val tabArray = arrayOf(
-        "History",
-        "Currency"
-    )
+
+    /**
+     * Argument retrieve from source
+     */
     private val args: HistoricDataFragmentArgs by navArgs()
 
     private var _binding: FragmentHistoricDataBinding? = null
@@ -38,21 +42,34 @@ class HistoricDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setTitleHeader()
 
         bindData()
-        val viewPager = binding.viewPager
-        val tabLayout = binding.tabLayout
 
-        val adapter = ViewPagerAdapter((activity as MainActivity).supportFragmentManager, lifecycle)
-        viewPager.adapter = adapter
 
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabArray[position]
-        }.attach()
+    }
+
+    private fun setTitleHeader() {
+        binding.txtBase.text = "Base Currency is : ${args.fromCurrency} "
+            .plus("\nFrom Currency is : ${args.toCurrency} ")
+            .plus("\nInput is : ${args.exchangeBaseCurrency} ${args.fromCurrency}  ")
+            .plus("\nResult is : ${args.exchangeCurrencyResult} ${args.toCurrency} ")
     }
 
     private fun bindData() {
+        /**
+         * bind viewpager with fragment
+         */
+        val viewPager = binding.viewPager
+        val tabLayout = binding.tabLayout
 
+        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, args.fromCurrency)
+        viewPager.adapter = adapter
+        viewPager.offscreenPageLimit = 2
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = Constants.tabArray[position]
+        }.attach()
     }
 
     override fun onDestroy() {

@@ -23,6 +23,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/from"
             android:layout_weight="1">
 
             <AutoCompleteTextView
@@ -48,6 +49,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/to"
             android:layout_weight="1">
 
             <AutoCompleteTextView
@@ -114,22 +116,29 @@
 
     </LinearLayout>
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCalculate"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:text="@string/fetch" />
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/currencyDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:text="@string/currency_details" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCalculate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="@string/fetch" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/currencyDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/currency_details" />
+    </LinearLayout>
 
 
 </LinearLayout>

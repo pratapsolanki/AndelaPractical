@@ -5,5 +5,7 @@
     <string name="select">Select</string>
     <string name="fetch">Fetch</string>
     <string name="value">Value</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
 
 </resources>

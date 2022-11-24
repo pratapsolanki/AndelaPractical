@@ -5,16 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andela.practical.R
 import com.andela.practical.databinding.FragmentConvertCurrencyBinding
-import com.andela.practical.util.Logger
-import com.andela.practical.util.Resource
-import com.andela.practical.util.isNetworkAvailable
-import com.andela.practical.util.toast
+import com.andela.practical.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,21 +21,17 @@ class ConvertCurrencyFragment : Fragment() {
     private val viewModel: ConvertCurrencyViewModel by viewModels()
 
 
-    var currencySymbols = emptyList<String>()
-    var base: String = "0"
-    var result: String = "0"
+    private var currencySymbols = emptyList<String>()
+    private var base: String = "0"
+    private var result: String = "0"
 
     private var fromCurrency: String = ""
     private var toCurrency: String = ""
 
-    var fromCurrencySelectedPos: Int = -1
-    var toCurrencySelectedPos: Int = -1
+    private var fromCurrencySelectedPos: Int = -1
+    private var toCurrencySelectedPos: Int = -1
 
-    var swipe: Boolean = true
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var swipe: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,20 +43,16 @@ class ConvertCurrencyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /**
+         * init data loading...
+         */
         if (requireContext().isNetworkAvailable()) {
             bindObserver()
             viewModel.getAllCurrency()
         } else {
-            val builder = AlertDialog.Builder(requireContext())
-            with(builder)
-            {
-                setTitle("ERROR!!!")
-                setMessage("NO INTERNET AVAILABLE")
-                show()
-            }
+            requireContext().toast("No Internet")
         }
-
-
         clickListener()
 
     }
@@ -74,11 +62,11 @@ class ConvertCurrencyFragment : Fragment() {
             base = binding.edtBaseCurrency.text.toString()
             val to = binding.toCurrencySpinner.text.toString()
             val from = binding.fromCurrencySpinner.text.toString()
-            val amount = binding.edtBaseCurrency.text.toString()
+            val amount = binding.edtExchangeCurrency.text.toString()
             val action =
                 ConvertCurrencyFragmentDirections.actionConvertCurrencyFragmentToHistoricDataFragment(
-                    base,
                     amount,
+                    base,
                     to,
                     from
                 )
@@ -97,8 +85,15 @@ class ConvertCurrencyFragment : Fragment() {
                             false
                         )
                         binding.toCurrencySpinner.setText(currencySymbols[id], false)
+                        Logger.d("******IN*****")
+                        Logger.d(fromCurrencySelectedPos.toString())
+                        Logger.d(toCurrencySelectedPos.toString())
                     }
                 }
+
+                val base = binding.edtBaseCurrency.text
+                binding.edtBaseCurrency.text = binding.edtExchangeCurrency.text
+                binding.edtExchangeCurrency.text = base
                 swipe = false
 
             } else {
@@ -107,27 +102,44 @@ class ConvertCurrencyFragment : Fragment() {
                 if (toCurrencySelectedPos != -1) {
                     val id = toCurrencySelectedPos
                     binding.toCurrencySpinner.setText(
+                        currencySymbols[id],
+                        false
+                    )
+                    binding.fromCurrencySpinner.setText(
                         currencySymbols[fromCurrencySelectedPos],
                         false
                     )
-                    binding.fromCurrencySpinner.setText(currencySymbols[id], false)
+                    Logger.d("******Out******")
+                    Logger.d(toCurrencySelectedPos.toString())
+                    Logger.d(fromCurrencySelectedPos.toString())
                 }
+                val exchange = binding.edtExchangeCurrency.text
+                binding.edtExchangeCurrency.text = binding.edtBaseCurrency.text
+                binding.edtBaseCurrency.text = exchange
+
                 swipe = true
             }
         }
 
         binding.btnCalculate.setOnClickListener {
-            val to = binding.toCurrencySpinner.text.toString()
-            val from = binding.fromCurrencySpinner.text.toString()
+
+            val to = binding.fromCurrencySpinner.text.toString()
+            val from = binding.toCurrencySpinner.text.toString()
             val amount = binding.edtBaseCurrency.text.toString()
 
-            viewModel.fetchValue(to, from, amount)
+            if (requireContext().isNetworkAvailable()) {
+                viewModel.fetchValue(to, from, amount)
+            } else {
+                requireContext().toast("No Internet")
+            }
         }
     }
 
 
     private fun bindObserver() {
-
+        /**
+         * Handling different state
+         */
         viewModel.observeCurrencyLiveData().observe(requireActivity()) {
             when (it) {
                 is Resource.Loading -> {
@@ -135,14 +147,12 @@ class ConvertCurrencyFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     it.data?.let {
-                        currencySymbols = ArrayList(it.symbols?.keys)
-                        it.symbols?.forEach { (k, v) ->
-                            Logger.d("  Name -> $k and value -> $v")
-                        }
+                        currencySymbols = ArrayList(it.currencies.keys)
                         bindAdapter()
                     }
                 }
                 is Resource.Error -> {
+                    it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
                 }
             }
         }

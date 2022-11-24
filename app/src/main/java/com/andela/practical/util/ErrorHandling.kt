@@ -2,11 +2,16 @@ package com.andela.practical.util
 
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
+import java.net.SocketException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import javax.net.ssl.HttpsURLConnection
 
 class ErrorHandling {
 
-
+    /**
+     * function for handling error message
+     */
     companion object {
 
         fun exceptionHandling(e: Exception): String? {
@@ -30,6 +35,15 @@ class ErrorHandling {
                 }
                 is NullPointerException -> {
                     return "Null"
+                }
+                is SocketException -> {
+                    return "Socket Exception"
+                }
+                is SocketTimeoutException -> {
+                    return "Socket Timeout"
+                }
+                is UnknownHostException -> {
+                    return "No address associated with hostname"
                 }
                 else -> {
                     return e.message

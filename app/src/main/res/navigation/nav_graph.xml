@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/convertCurrencyFragment"
         android:name="com.andela.practical.presentation.convert_currency.ConvertCurrencyFragment"
-        android:label="fragment_convert_currency"
-        tools:layout="@layout/fragment_convert_currency" >
+        android:label="Convert Currency"
+        tools:layout="@layout/fragment_convert_currency">
         <action
             android:id="@+id/action_convertCurrencyFragment_to_historicDataFragment"
-            app:restoreState="false"
-            app:destination="@id/historicDataFragment" />
+            app:destination="@id/historicDataFragment"
+            app:restoreState="false" />
     </fragment>
     <fragment
         android:id="@+id/historicDataFragment"
-        android:name="com.andela.practical.presentation.histric_data.HistoricDataFragment"
-        android:label="fragment_historic_data"
-        tools:layout="@layout/fragment_historic_data" >
+        android:name="com.andela.practical.presentation.history_data.HistoricDataFragment"
+        android:label="Historical Data"
+        tools:layout="@layout/fragment_historic_data">
         <argument
             android:name="ExchangeCurrencyResult"
             app:argType="string" />

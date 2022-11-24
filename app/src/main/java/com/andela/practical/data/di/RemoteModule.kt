@@ -14,6 +14,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+/**
+ * @inject -> for code you own
+ * @Bind -> for injection
+ * @Provider -> for code tou don't own
+ */
+
+/**
+ *
+ */
 @InstallIn(SingletonComponent::class)
 @Module
 class RemoteModule {
@@ -47,7 +56,7 @@ class RemoteModule {
     @Provides
     fun okhttpClient(context: Context): OkHttpClient {
         return OkHttpClient
-            .Builder().callTimeout(2 , TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES)
+            .Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES)
             .build()
     }
 

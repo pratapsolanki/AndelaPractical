@@ -13,7 +13,7 @@ data class ConvertResult(
     )
 
     data class Query(
-        val amount: Int?,
+        val amount: Double?,
         val from: String?,
         val to: String?
     )

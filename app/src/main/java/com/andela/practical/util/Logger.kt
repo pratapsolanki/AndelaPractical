@@ -3,6 +3,9 @@ package com.andela.practical.util
 import android.util.Log
 import com.andela.practical.BuildConfig
 
+/**
+ * This class is used for manage global log
+ */
 class Logger {
     companion object {
 

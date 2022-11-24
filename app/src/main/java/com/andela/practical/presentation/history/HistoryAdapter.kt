@@ -7,7 +7,7 @@ import com.andela.practical.databinding.SingleHistoryDesignBinding
 import com.andela.practical.domain.models.History
 
 class HistoryAdapter : RecyclerView.Adapter<MainViewHolder>() {
-    private  var historyList: ArrayList<History> = ArrayList()
+    private var historyList: ArrayList<History> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -17,7 +17,8 @@ class HistoryAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val article = historyList[position]
-        holder.binding.textView.text = article.data + " \n " +article.list[position].key  + article.list[position].value
+        holder.binding.textView.text =
+            article.data + "\n" + article.list.joinToString { it.toString() }
 
     }
 
@@ -31,4 +32,6 @@ class HistoryAdapter : RecyclerView.Adapter<MainViewHolder>() {
     }
 
 }
-class MainViewHolder(var binding: SingleHistoryDesignBinding) : RecyclerView.ViewHolder(binding.root)
+
+class MainViewHolder(var binding: SingleHistoryDesignBinding) :
+    RecyclerView.ViewHolder(binding.root)

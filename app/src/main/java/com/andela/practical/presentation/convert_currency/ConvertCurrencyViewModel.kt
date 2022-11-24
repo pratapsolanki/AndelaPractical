@@ -16,6 +16,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ *  By @Inject annotation you can access specific class from container  in Hilt
+ */
 @HiltViewModel
 class ConvertCurrencyViewModel @Inject constructor(private val remoteRepositoryImpl: RemoteRepositoryImpl) :
     ViewModel() {
@@ -26,6 +29,7 @@ class ConvertCurrencyViewModel @Inject constructor(private val remoteRepositoryI
 
 
     fun getAllCurrency() {
+
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 withContext(Dispatchers.Main) {

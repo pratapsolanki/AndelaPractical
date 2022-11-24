@@ -3,6 +3,7 @@ package com.andela.practical.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.view.View
 import android.widget.Toast
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
@@ -30,3 +31,14 @@ fun Context.toast(message: CharSequence): Toast = Toast
         show()
     }
 
+fun View.gone() {
+    this.visibility = View.GONE
+}
+
+fun View.visible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.invisible() {
+    this.visibility = View.INVISIBLE
+}
