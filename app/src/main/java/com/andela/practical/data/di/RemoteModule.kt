@@ -4,7 +4,6 @@ import android.content.Context
 import com.andela.practical.util.AddLoggingInterceptor
 import com.andela.practical.data.remote.ApiService
 import com.andela.practical.util.ApiConstants
-import com.andela.practical.util.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,7 +48,6 @@ class RemoteModule {
     fun okhttpClient(context: Context): OkHttpClient {
         return OkHttpClient
             .Builder().callTimeout(2 , TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES)
-            .addInterceptor(AuthInterceptor(context))
             .build()
     }
 

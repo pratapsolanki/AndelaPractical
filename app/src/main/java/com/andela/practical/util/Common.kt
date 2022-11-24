@@ -3,8 +3,12 @@ package com.andela.practical.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.widget.Toast
+import com.google.gson.JsonSyntaxException
+import retrofit2.HttpException
+import javax.net.ssl.HttpsURLConnection
 
-fun Context. isNetworkAvailable(): Boolean {
+fun Context.isNetworkAvailable(): Boolean {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val nw = connectivityManager.activeNetwork ?: return false
     val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
@@ -18,3 +22,11 @@ fun Context. isNetworkAvailable(): Boolean {
         else -> false
     }
 }
+
+
+fun Context.toast(message: CharSequence): Toast = Toast
+    .makeText(this, message, Toast.LENGTH_SHORT)
+    .apply {
+        show()
+    }
+

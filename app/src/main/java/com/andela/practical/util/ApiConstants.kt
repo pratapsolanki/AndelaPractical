@@ -5,4 +5,8 @@ object ApiConstants {
     const val ALL_SYMBOL = "symbols"
     const val CONVERT = "convert"
     const val KEY = "jdGIuaheSw3tzgUWWj92ctbnoeIutS21"
+
+    const val TIMESERIES = "timeseries"
+
+
 }

@@ -7,10 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.andela.practical.databinding.FragmentHistoricDataBinding
+import com.andela.practical.presentation.MainActivity
+import com.andela.practical.presentation.convert_currency.ViewPagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HistoricDataFragment : Fragment() {
+    private val tabArray = arrayOf(
+        "History",
+        "Currency"
+    )
     private val args: HistoricDataFragmentArgs by navArgs()
 
     private var _binding: FragmentHistoricDataBinding? = null
@@ -23,7 +30,7 @@ class HistoricDataFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHistoricDataBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -31,15 +38,21 @@ class HistoricDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bindData()
 
+        bindData()
+        val viewPager = binding.viewPager
+        val tabLayout = binding.tabLayout
+
+        val adapter = ViewPagerAdapter((activity as MainActivity).supportFragmentManager, lifecycle)
+        viewPager.adapter = adapter
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = tabArray[position]
+        }.attach()
     }
 
     private fun bindData() {
-        binding.baseAmout.text = args.exchangeBaseCurrency
-        binding.resultAmount.text = args.exchangeCurrencyResult
-        binding.toAmout.text = args.toCurrency
-        binding.fromAmout.text = args.fromCurrency
+
     }
 
     override fun onDestroy() {

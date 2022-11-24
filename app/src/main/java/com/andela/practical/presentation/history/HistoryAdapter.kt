@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andela.practical.databinding.SingleHistoryDesignBinding
 import com.andela.practical.domain.models.History
 
-class HistoryAdapter() : RecyclerView.Adapter<MainViewHolder>() {
+class HistoryAdapter : RecyclerView.Adapter<MainViewHolder>() {
     private  var historyList: ArrayList<History> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {

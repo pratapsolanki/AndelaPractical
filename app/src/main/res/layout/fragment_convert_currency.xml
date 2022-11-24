@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:paddingVertical="5dp"
-            app:srcCompat="@drawable/ic_baseline_swap_horiz_24" />
+            android:paddingVertical="10dp"
+            app:srcCompat="@drawable/arrow_right_circle_outline" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -107,13 +107,21 @@
                 android:id="@+id/edtExchangeCurrency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Value"
+                android:hint="@string/value"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
     </LinearLayout>
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCalculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:text="@string/fetch" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/currencyDetails"
