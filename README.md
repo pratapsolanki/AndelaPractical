@@ -1,6 +1,6 @@
 # Exercise : Currency - Android
 
-## 💡 Assignment:
+## 💡 Sprints:
 
 - FF-1: Convert Currency
 - FF-2: Historical Data
@@ -35,7 +35,7 @@
   </tr>
   <tr>
     <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/5.png"></td>
-     <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/6.png"></td>
+     <td valign="top"><img src="https://github.com/pratapsolanki/AndelaPractical/blob/main/results/4.png"></td>
   </tr>
   </table>
 
