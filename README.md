@@ -6,7 +6,7 @@
 - FF-2: Historical Data
 - FF-3: Other Currencies
 
-## 💡Sprint Screenshots
+## 💡 Screenshots
 
 <table>
   <tr>
