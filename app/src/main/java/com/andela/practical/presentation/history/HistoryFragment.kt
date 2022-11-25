@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andela.practical.databinding.FragmentHistoryBinding
 import com.andela.practical.domain.models.Currency
@@ -13,6 +14,7 @@ import com.andela.practical.domain.models.History
 import com.andela.practical.presentation.history_data.HistoryDataViewModel
 import com.andela.practical.util.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -53,7 +55,6 @@ class HistoryFragment : Fragment() {
         iniRecyclerview()
         if (requireContext().isNetworkAvailable()) {
             bindObserver()
-
             viewModel.getHistory(baseCurrency, formattedLastDay, formattedCurrentDay)
             bindObserver()
         } else {
@@ -73,36 +74,39 @@ class HistoryFragment : Fragment() {
 
 
     private fun bindObserver() {
-        viewModel.observeHistoryLiveData().observe(requireActivity()) {
-            when (it) {
-                is Resource.Loading -> {
-                    binding.progressBar.visible()
 
-                }
-                is Resource.Success -> {
-                    binding.progressBar.gone()
-                    it.data?.let {
-                        val temp: ArrayList<History> = ArrayList()
-                        it.quotes.forEach { (k, v) ->
-                            val data: ArrayList<Currency> = ArrayList()
-                            val date: String = k
-                            v.forEach { (k, v) ->
-                                data.add(Currency(k, v))
-                            }
-                            temp.add(History(date, data))
-                            Logger.d("Size " + temp.size.toString())
+        lifecycleScope.launchWhenStarted {
+            viewModel.historyUIState.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visible()
 
-                        }
-                        Logger.d("Size" + temp.size.toString())
-                        articleAdapter.setData(temp)
                     }
-                }
-                is Resource.Error -> {
-                    binding.progressBar.gone()
-                    try {
-                        it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
-                    } catch (e: Exception) {
-                        Logger.d("")
+                    is Resource.Success -> {
+                        binding.progressBar.gone()
+                        it.data?.let {
+                            val temp: ArrayList<History> = ArrayList()
+                            it.quotes.forEach { (k, v) ->
+                                val data: ArrayList<Currency> = ArrayList()
+                                val date: String = k
+                                v.forEach { (k, v) ->
+                                    data.add(Currency(k, v))
+                                }
+                                temp.add(History(date, data))
+                                Logger.d("Size " + temp.size.toString())
+
+                            }
+                            Logger.d("Size" + temp.size.toString())
+                            articleAdapter.setData(temp)
+                        }
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.gone()
+                        try {
+                            it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+                        } catch (e: Exception) {
+                            Logger.d("")
+                        }
                     }
                 }
             }

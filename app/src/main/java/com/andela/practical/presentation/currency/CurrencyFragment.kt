@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andela.practical.databinding.FragmentHistoryBinding
 import com.andela.practical.domain.models.Currency
 import com.andela.practical.presentation.history_data.HistoryDataViewModel
 import com.andela.practical.util.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class CurrencyFragment : Fragment() {
@@ -26,7 +28,7 @@ class CurrencyFragment : Fragment() {
             this.baseCurrency = baseCurrency
         }
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,29 +64,33 @@ class CurrencyFragment : Fragment() {
 
 
     private fun bindObserver() {
-        viewModel.observeCurrencyLiveData().observe(requireActivity()) {
-            when (it) {
-                is Resource.Loading -> {
-                    binding.progressBar.visible()
 
-                }
-                is Resource.Success -> {
-                    binding.progressBar.gone()
+        lifecycleScope.launchWhenStarted {
+            viewModel.currencyUUIState.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.progressBar.visible()
 
-                    it.data?.let {
-                        val temp: ArrayList<Currency> = ArrayList()
-                        it.quotes.forEach { (k, v) ->
-                            temp.add(Currency(k ,v))
-                        }
-                        adapter.setData(temp)
                     }
-                }
-                is Resource.Error -> {
-                    binding.progressBar.gone()
-                    it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+                    is Resource.Success -> {
+                        binding.progressBar.gone()
+
+                        it.data?.let {
+                            val temp: ArrayList<Currency> = ArrayList()
+                            it.quotes.forEach { (k, v) ->
+                                temp.add(Currency(k, v))
+                            }
+                            adapter.setData(temp)
+                        }
+                    }
+                    is Resource.Error -> {
+                        binding.progressBar.gone()
+                        it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+                    }
                 }
             }
         }
+
     }
 
 }

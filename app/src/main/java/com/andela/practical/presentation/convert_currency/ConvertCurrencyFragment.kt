@@ -9,6 +9,7 @@ import androidx.core.os.postDelayed
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.andela.practical.R
 import com.andela.practical.databinding.FragmentConvertCurrencyBinding
@@ -17,6 +18,7 @@ import com.andela.practical.util.Resource
 import com.andela.practical.util.isNetworkAvailable
 import com.andela.practical.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class ConvertCurrencyFragment : Fragment() {
@@ -55,7 +57,7 @@ class ConvertCurrencyFragment : Fragment() {
          */
         if (requireContext().isNetworkAvailable()) {
             bindObserver()
-            viewModel.getAllCurrency()
+            viewModel.getAllCurrencyFlow()
         } else {
             requireContext().toast("No Internet")
         }
@@ -172,49 +174,53 @@ class ConvertCurrencyFragment : Fragment() {
         /**
          * Handling different state
          */
-        viewModel.observeCurrencyLiveData().observe(requireActivity()) {
-            when (it) {
-                is Resource.Loading -> {
+        lifecycleScope.launchWhenStarted {
+            viewModel.currencyFlowUI.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
 
-                }
-                is Resource.Success -> {
-                    it.data?.let {
-                        currencySymbols = ArrayList(it.currencies.keys)
-                        bindAdapter()
                     }
-                }
-                is Resource.Error -> {
-
-                    try {
-                        it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
-                    } catch (e: Exception) {
-                        Logger.d(e.toString())
+                    is Resource.Success -> {
+                        it.data?.let {
+                            currencySymbols = ArrayList(it.currencies.keys)
+                            bindAdapter()
+                        }
                     }
-                }
-            }
-        }
+                    is Resource.Error -> {
 
-        viewModel.observerFullLiveData().observe(requireActivity()) {
-            when (it) {
-                is Resource.Loading -> {
-
-                }
-                is Resource.Success -> {
-                    it.data?.let {
-                        result = it.result.toString()
-                        binding.edtExchangeCurrency.setText(it.result.toString())
-                    }
-                }
-                is Resource.Error -> {
-                    try {
-                        requireContext().toast(it.errorMessage.toString())
-                    } catch (e: Exception) {
-                        Logger.d(e.toString())
+                        try {
+                            it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+                        } catch (e: Exception) {
+                            Logger.d(e.toString())
+                        }
                     }
                 }
             }
         }
 
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.convertUIState.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Success -> {
+                        it.data?.let {
+                            result = it.result.toString()
+                            binding.edtExchangeCurrency.setText(it.result.toString())
+                        }
+                    }
+                    is Resource.Error -> {
+                        try {
+                            requireContext().toast(it.errorMessage.toString())
+                        } catch (e: Exception) {
+                            Logger.d(e.toString())
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun bindAdapter() {
