@@ -51,7 +51,7 @@
 - [Material-Components - Material design components](https://material.io/design)
 
 ##  Architecture
-   [Clean code architecture](https://material.io/design](https://github.com/jbsolutions2008/Android-Clean-Architecture-MVVM-Hilt)
+ - [Clean code architecture](https://github.com/jbsolutions2008/Android-Clean-Architecture-MVVM-Hilt)
 
 
 # Thank you  for the reading and have a good day.
