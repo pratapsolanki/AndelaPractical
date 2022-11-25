@@ -23,14 +23,15 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/from"
-            android:layout_weight="1">
+            android:layout_weight="4"
+            android:hint="@string/from">
 
             <AutoCompleteTextView
                 android:id="@+id/fromCurrencySpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
+                android:maxLines="2"
                 android:text="@string/select" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -40,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:paddingVertical="10dp"
             app:srcCompat="@drawable/arrow_right_circle_outline" />
 
@@ -49,8 +50,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/to"
-            android:layout_weight="1">
+            android:layout_weight="4"
+            android:hint="@string/to">
 
             <AutoCompleteTextView
                 android:id="@+id/toCurrencySpinner"

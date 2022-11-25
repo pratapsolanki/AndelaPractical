@@ -3,8 +3,12 @@ package com.andela.practical.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.text.Editable
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.postDelayed
+import androidx.core.widget.doAfterTextChanged
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
 import javax.net.ssl.HttpsURLConnection
@@ -41,4 +45,14 @@ fun View.visible() {
 
 fun View.invisible() {
     this.visibility = View.INVISIBLE
+}
+
+
+fun EditText.debounce(delay: Long, action: (Editable?) -> Unit) {
+    doAfterTextChanged { text ->
+        var counter = getTag(id) as? Int ?: 0
+        handler.removeCallbacksAndMessages(counter)
+        handler.postDelayed(delay, ++counter) { action(text) }
+        setTag(id, counter)
+    }
 }

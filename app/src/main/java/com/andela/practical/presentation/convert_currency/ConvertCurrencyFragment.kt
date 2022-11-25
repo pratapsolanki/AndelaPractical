@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.os.postDelayed
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andela.practical.R
 import com.andela.practical.databinding.FragmentConvertCurrencyBinding
-import com.andela.practical.util.*
+import com.andela.practical.util.Logger
+import com.andela.practical.util.Resource
+import com.andela.practical.util.isNetworkAvailable
+import com.andela.practical.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +37,7 @@ class ConvertCurrencyFragment : Fragment() {
     private var toCurrencySelectedPos: Int = -1
 
     private var swipe: Boolean = true
+    private var counter = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -122,16 +128,42 @@ class ConvertCurrencyFragment : Fragment() {
         }
 
         binding.btnCalculate.setOnClickListener {
+            convert()
+        }
 
-            val to = binding.fromCurrencySpinner.text.toString()
-            val from = binding.toCurrencySpinner.text.toString()
-            val amount = binding.edtBaseCurrency.text.toString()
 
-            if (requireContext().isNetworkAvailable()) {
-                viewModel.fetchValue(to, from, amount)
-            } else {
-                requireContext().toast("No Internet")
+        binding.edtBaseCurrency.doAfterTextChanged {
+            try {
+                binding.edtBaseCurrency.handler.removeCallbacksAndMessages(counter)
+                binding.edtBaseCurrency.handler.postDelayed(500L, ++counter) {
+                    if (binding.edtBaseCurrency.text.toString().isNotEmpty()) {
+                        Logger.d(binding.edtBaseCurrency.text.toString())
+                        convert()
+                    }
+                }
+            } catch (e: Exception) {
+                Logger.d(e.toString())
             }
+
+        }
+
+    }
+
+    private fun convert() {
+        val to = binding.toCurrencySpinner.text.toString()
+        val from = binding.fromCurrencySpinner.text.toString()
+        val amount = binding.edtBaseCurrency.text.toString()
+
+        if (requireContext().isNetworkAvailable()) {
+            Logger.d("from =>$from")
+            Logger.d("to =>$to")
+            Logger.d("amount$amount")
+            Logger.d("swipe $swipe")
+            Logger.d("from $fromCurrencySelectedPos")
+            Logger.d("to $toCurrencySelectedPos")
+            viewModel.fetchValue(to, from, amount)
+        } else {
+            requireContext().toast("No Internet")
         }
     }
 
@@ -152,7 +184,12 @@ class ConvertCurrencyFragment : Fragment() {
                     }
                 }
                 is Resource.Error -> {
-                    it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+
+                    try {
+                        it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+                    } catch (e: Exception) {
+                        Logger.d(e.toString())
+                    }
                 }
             }
         }
@@ -169,7 +206,11 @@ class ConvertCurrencyFragment : Fragment() {
                     }
                 }
                 is Resource.Error -> {
-                    requireContext().toast(it.errorMessage.toString())
+                    try {
+                        requireContext().toast(it.errorMessage.toString())
+                    } catch (e: Exception) {
+                        Logger.d(e.toString())
+                    }
                 }
             }
         }
@@ -179,8 +220,6 @@ class ConvertCurrencyFragment : Fragment() {
     private fun bindAdapter() {
         val arrayAdapter =
             ArrayAdapter(requireContext(), R.layout.dropdown_item, currencySymbols)
-        binding.fromCurrencySpinner.setAdapter(arrayAdapter)
-        binding.toCurrencySpinner.setAdapter(arrayAdapter)
 
         binding.fromCurrencySpinner.setAdapter(arrayAdapter)
         binding.toCurrencySpinner.setAdapter(arrayAdapter)

@@ -99,7 +99,11 @@ class HistoryFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     binding.progressBar.gone()
-                    it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+                    try {
+                        it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
+                    } catch (e: Exception) {
+                        Logger.d("")
+                    }
                 }
             }
         }

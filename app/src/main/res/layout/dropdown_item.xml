@@ -3,5 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="14dp"
+    android:maxLines="2"
     android:text="@string/app_name"
     android:textColor="@color/black" />
