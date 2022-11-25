@@ -46,7 +46,6 @@
 - [Jetpack Navigation](https://developer.android.com/guide/navigation/)
 - [ViewModel - UI related data holder, lifecycle aware](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [MVVM Architecture (View - DataBinding - ViewModel - Model)](https://developer.android.com/topic/libraries/view-binding)
-- [Glide - loading images](https://github.com/bumptech/glide)
 - [Retrofit2 & OkHttp3 - construct the REST APIs and paging network data](https://square.github.io/retrofit/)
 - [Gson - JSON representation](https://github.com/google/gson)
 - [Material-Components - Material design components](https://material.io/design)
