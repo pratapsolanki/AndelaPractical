@@ -26,7 +26,6 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import retrofit2.Response
 
-/*
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class ConvertCurrencyViewModelTest {
@@ -48,4 +47,4 @@ class ConvertCurrencyViewModelTest {
     fun `should get all currency flow`() = runTest {
 
     }
-}*/
+}

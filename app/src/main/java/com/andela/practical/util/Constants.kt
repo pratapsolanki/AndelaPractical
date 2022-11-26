@@ -5,7 +5,5 @@ object Constants {
         "History",
         "Other Currencies"
     )
-
      const val NUM_TABS = 2
-
 }

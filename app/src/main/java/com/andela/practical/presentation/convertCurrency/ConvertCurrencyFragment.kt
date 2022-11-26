@@ -27,7 +27,6 @@ class ConvertCurrencyFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ConvertCurrencyViewModel by viewModels()
 
-
     private var currencySymbols = emptyList<String>()
     private var base: String = "0"
     private var result: String = "0"
@@ -62,7 +61,6 @@ class ConvertCurrencyFragment : Fragment() {
             requireContext().toast("No Internet")
         }
         clickListener()
-
     }
 
     @Suppress("LongMethod")
@@ -162,7 +160,6 @@ class ConvertCurrencyFragment : Fragment() {
         }
     }
 
-
     private fun bindObserver() {
         /**
          * Handling different state
@@ -189,7 +186,6 @@ class ConvertCurrencyFragment : Fragment() {
                 }
             }
         }
-
 
         lifecycleScope.launchWhenStarted {
             viewModel.convertUIState.collectLatest {
@@ -252,5 +248,4 @@ class ConvertCurrencyFragment : Fragment() {
         _binding = null
         super.onDestroy()
     }
-
 }

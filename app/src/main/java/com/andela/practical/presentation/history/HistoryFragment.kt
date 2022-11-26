@@ -12,7 +12,12 @@ import com.andela.practical.databinding.FragmentHistoryBinding
 import com.andela.practical.domain.models.Currency
 import com.andela.practical.domain.models.History
 import com.andela.practical.presentation.historyData.HistoryDataViewModel
-import com.andela.practical.util.*
+import com.andela.practical.util.Logger
+import com.andela.practical.util.Resource
+import com.andela.practical.util.gone
+import com.andela.practical.util.isNetworkAvailable
+import com.andela.practical.util.toast
+import com.andela.practical.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDateTime
@@ -32,14 +37,10 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,9 +62,7 @@ class HistoryFragment : Fragment() {
             binding.progressBar.gone()
             requireContext().toast("No Internet")
         }
-
     }
-
 
     private fun iniRecyclerview() {
         articleAdapter = HistoryAdapter()
@@ -72,15 +71,12 @@ class HistoryFragment : Fragment() {
         articleAdapter.notifyDataSetChanged()
     }
 
-
     private fun bindObserver() {
-
         lifecycleScope.launchWhenStarted {
             viewModel.historyUIState.collectLatest {
                 when (it) {
                     is Resource.Loading -> {
                         binding.progressBar.visible()
-
                     }
                     is Resource.Success -> {
                         binding.progressBar.gone()

@@ -12,7 +12,6 @@ import com.andela.practical.util.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
-
 /**
  * Consumer - can access all the class from the container
  */
@@ -26,10 +25,6 @@ class HistoricDataFragment : Fragment() {
 
     private var _binding: FragmentHistoricDataBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

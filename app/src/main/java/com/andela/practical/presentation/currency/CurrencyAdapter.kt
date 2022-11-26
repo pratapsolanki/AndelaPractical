@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andela.practical.databinding.SingleOtherCurrencyDesignBinding
 import com.andela.practical.domain.models.Currency
 
-class CurrencyAdapter() : RecyclerView.Adapter<MainViewHolder>() {
+class CurrencyAdapter : RecyclerView.Adapter<MainViewHolder>() {
     private var historyList: ArrayList<Currency> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {

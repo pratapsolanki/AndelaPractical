@@ -28,7 +28,6 @@ fun Context.isNetworkAvailable(): Boolean {
     }
 }
 
-
 fun Context.toast(message: CharSequence): Toast = Toast
     .makeText(this, message, Toast.LENGTH_SHORT)
     .apply {
