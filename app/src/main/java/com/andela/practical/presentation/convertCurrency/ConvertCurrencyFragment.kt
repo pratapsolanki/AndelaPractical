@@ -1,4 +1,4 @@
-package com.andela.practical.presentation.convert_currency
+package com.andela.practical.presentation.convertCurrency
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -65,6 +65,7 @@ class ConvertCurrencyFragment : Fragment() {
 
     }
 
+    @Suppress("LongMethod")
     private fun clickListener() {
         binding.currencyDetails.setOnClickListener {
             base = binding.edtBaseCurrency.text.toString()
@@ -80,7 +81,6 @@ class ConvertCurrencyFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
-
 
         binding.swipeCurrencyBtn.setOnClickListener {
             if (swipe) {
@@ -98,14 +98,11 @@ class ConvertCurrencyFragment : Fragment() {
                         Logger.d(toCurrencySelectedPos.toString())
                     }
                 }
-
                 val base = binding.edtBaseCurrency.text
                 binding.edtBaseCurrency.text = binding.edtExchangeCurrency.text
                 binding.edtExchangeCurrency.text = base
                 swipe = false
-
             } else {
-
                 binding.swipeCurrencyBtn.setImageResource(R.drawable.arrow_right_circle_outline)
                 if (toCurrencySelectedPos != -1) {
                     val id = toCurrencySelectedPos
@@ -124,7 +121,6 @@ class ConvertCurrencyFragment : Fragment() {
                 val exchange = binding.edtExchangeCurrency.text
                 binding.edtExchangeCurrency.text = binding.edtBaseCurrency.text
                 binding.edtBaseCurrency.text = exchange
-
                 swipe = true
             }
         }
@@ -132,7 +128,6 @@ class ConvertCurrencyFragment : Fragment() {
         binding.btnCalculate.setOnClickListener {
             convert()
         }
-
 
         binding.edtBaseCurrency.doAfterTextChanged {
             try {
@@ -146,9 +141,7 @@ class ConvertCurrencyFragment : Fragment() {
             } catch (e: Exception) {
                 Logger.d(e.toString())
             }
-
         }
-
     }
 
     private fun convert() {
@@ -187,7 +180,6 @@ class ConvertCurrencyFragment : Fragment() {
                         }
                     }
                     is Resource.Error -> {
-
                         try {
                             it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
                         } catch (e: Exception) {

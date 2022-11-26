@@ -1,4 +1,4 @@
-package com.andela.practical.presentation.history_data
+package com.andela.practical.presentation.historyData
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryDataViewModel @Inject constructor(private val remoteRepositoryImpl: RemoteRepositoryImpl) :
     ViewModel() {
-
 
     private val _historyUIStateFlow = MutableStateFlow<Resource<HistoryData>>(Resource.Loading())
     val historyUIState = _historyUIStateFlow.asStateFlow()
@@ -42,7 +41,6 @@ class HistoryDataViewModel @Inject constructor(private val remoteRepositoryImpl:
     }
 
     fun getCurrency(baseCurrency: String) {
-
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _currencyUIStateFlow.emit(Resource.Loading())
@@ -56,8 +54,5 @@ class HistoryDataViewModel @Inject constructor(private val remoteRepositoryImpl:
                 _currencyUIStateFlow.emit(Resource.Error(ErrorHandling.exceptionHandling(e)!!))
             }
         }
-
     }
-
-
 }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.andela.practical.databinding.FragmentHistoryBinding
 import com.andela.practical.domain.models.Currency
 import com.andela.practical.domain.models.History
-import com.andela.practical.presentation.history_data.HistoryDataViewModel
+import com.andela.practical.presentation.historyData.HistoryDataViewModel
 import com.andela.practical.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

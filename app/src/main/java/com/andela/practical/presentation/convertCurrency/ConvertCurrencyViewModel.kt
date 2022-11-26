@@ -1,4 +1,4 @@
-package com.andela.practical.presentation.convert_currency
+package com.andela.practical.presentation.convertCurrency
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +24,6 @@ class ConvertCurrencyViewModel @Inject constructor(private val remoteRepositoryI
     private val _convertUIStateFlow = MutableStateFlow<Resource<ConvertResult>>(Resource.Loading())
     val convertUIState = _convertUIStateFlow.asStateFlow()
 
-
     private val _convertFlowState = MutableStateFlow<Resource<Symbol>>(Resource.Loading())
     val currencyFlowUI = _convertFlowState.asStateFlow()
 
@@ -44,7 +43,6 @@ class ConvertCurrencyViewModel @Inject constructor(private val remoteRepositoryI
         }
     }
 
-
     fun fetchValue(to: String, from: String, amount: String) =
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -59,6 +57,4 @@ class ConvertCurrencyViewModel @Inject constructor(private val remoteRepositoryI
                 _convertUIStateFlow.emit(Resource.Error(ErrorHandling.exceptionHandling(e)!!))
             }
         }
-
-
 }
