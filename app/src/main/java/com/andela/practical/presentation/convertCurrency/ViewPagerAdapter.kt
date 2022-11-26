@@ -1,4 +1,4 @@
-package com.andela.practical.presentation.convert_currency
+package com.andela.practical.presentation.convertCurrency
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -9,7 +9,7 @@ import com.andela.practical.presentation.history.HistoryFragment
 import com.andela.practical.util.Constants
 
 
-public class ViewPagerAdapter(
+class ViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     var data: String

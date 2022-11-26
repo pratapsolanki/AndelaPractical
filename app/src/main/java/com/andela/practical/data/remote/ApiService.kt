@@ -23,15 +23,13 @@ interface ApiService {
         @Query("amount") amount: String
     ): Response<ConvertResult>
 
-
     @Headers("apikey: ${ApiConstants.KEY}")
     @GET(ApiConstants.TIME_SERIES)
     suspend fun getThreeDayHistory(
         @Query("source") source: String,
-        @Query("start_date") start_date: String,
-        @Query("end_date") end_date: String
+        @Query("start_date") startDate: String,
+        @Query("end_date") endDate: String
     ): Response<HistoryData>
-
 
     @Headers("apikey: ${ApiConstants.KEY}")
     @GET(ApiConstants.OTHER_CURRENCY)

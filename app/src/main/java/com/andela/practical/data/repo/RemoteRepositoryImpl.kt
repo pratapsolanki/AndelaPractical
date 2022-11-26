@@ -34,5 +34,4 @@ class RemoteRepositoryImpl @Inject constructor(private val apiService: ApiServic
      */
     suspend fun getCurrency(baseCurrency: String): Response<OtherCurrency> =
         apiService.getCurrency(baseCurrency, "AED,CAD,CNY,EUR,GBP,INR,IRR,RUB,USD,ZAR")
-
 }

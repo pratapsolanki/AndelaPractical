@@ -1,4 +1,4 @@
-package com.andela.practical.presentation.history_data
+package com.andela.practical.presentation.historyData
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.andela.practical.databinding.FragmentHistoricDataBinding
-import com.andela.practical.presentation.convert_currency.ViewPagerAdapter
+import com.andela.practical.presentation.convertCurrency.ViewPagerAdapter
 import com.andela.practical.util.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-
 
 /**
  * Consumer - can access all the class from the container
@@ -26,10 +25,6 @@ class HistoricDataFragment : Fragment() {
 
     private var _binding: FragmentHistoricDataBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -30,7 +30,6 @@ class HistoryAdapter : RecyclerView.Adapter<MainViewHolder>() {
         historyList = articleModel as ArrayList<History>
         notifyDataSetChanged()
     }
-
 }
 
 class MainViewHolder(var binding: SingleHistoryDesignBinding) :

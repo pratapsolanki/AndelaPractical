@@ -7,17 +7,18 @@
 
     <fragment
         android:id="@+id/convertCurrencyFragment"
-        android:name="com.andela.practical.presentation.convert_currency.ConvertCurrencyFragment"
+        android:name="com.andela.practical.presentation.convertCurrency.ConvertCurrencyFragment"
         android:label="Convert Currency"
+
         tools:layout="@layout/fragment_convert_currency">
         <action
             android:id="@+id/action_convertCurrencyFragment_to_historicDataFragment"
             app:destination="@id/historicDataFragment"
-            app:restoreState="false" />
+            app:restoreState="true" />
     </fragment>
     <fragment
         android:id="@+id/historicDataFragment"
-        android:name="com.andela.practical.presentation.history_data.HistoricDataFragment"
+        android:name="com.andela.practical.presentation.historyData.HistoricDataFragment"
         android:label="Historical Data"
         tools:layout="@layout/fragment_historic_data">
         <argument

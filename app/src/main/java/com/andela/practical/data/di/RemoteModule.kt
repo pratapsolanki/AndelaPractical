@@ -1,6 +1,5 @@
 package com.andela.practical.data.di
 
-import android.content.Context
 import com.andela.practical.util.AddLoggingInterceptor
 import com.andela.practical.data.remote.ApiService
 import com.andela.practical.util.ApiConstants
@@ -54,10 +53,9 @@ class RemoteModule {
      */
     @Singleton
     @Provides
-    fun okhttpClient(context: Context): OkHttpClient {
+    fun okhttpClient(): OkHttpClient {
         return OkHttpClient
             .Builder().callTimeout(2, TimeUnit.MINUTES).connectTimeout(2, TimeUnit.MINUTES)
             .build()
     }
-
 }

@@ -1,4 +1,4 @@
-package com.andela.practical.presentation.convert_currency
+package com.andela.practical.presentation.convertCurrency
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,7 +26,6 @@ class ConvertCurrencyFragment : Fragment() {
     private var _binding: FragmentConvertCurrencyBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ConvertCurrencyViewModel by viewModels()
-
 
     private var currencySymbols = emptyList<String>()
     private var base: String = "0"
@@ -62,9 +61,9 @@ class ConvertCurrencyFragment : Fragment() {
             requireContext().toast("No Internet")
         }
         clickListener()
-
     }
 
+    @Suppress("LongMethod")
     private fun clickListener() {
         binding.currencyDetails.setOnClickListener {
             base = binding.edtBaseCurrency.text.toString()
@@ -80,7 +79,6 @@ class ConvertCurrencyFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
-
 
         binding.swipeCurrencyBtn.setOnClickListener {
             if (swipe) {
@@ -98,14 +96,11 @@ class ConvertCurrencyFragment : Fragment() {
                         Logger.d(toCurrencySelectedPos.toString())
                     }
                 }
-
                 val base = binding.edtBaseCurrency.text
                 binding.edtBaseCurrency.text = binding.edtExchangeCurrency.text
                 binding.edtExchangeCurrency.text = base
                 swipe = false
-
             } else {
-
                 binding.swipeCurrencyBtn.setImageResource(R.drawable.arrow_right_circle_outline)
                 if (toCurrencySelectedPos != -1) {
                     val id = toCurrencySelectedPos
@@ -124,7 +119,6 @@ class ConvertCurrencyFragment : Fragment() {
                 val exchange = binding.edtExchangeCurrency.text
                 binding.edtExchangeCurrency.text = binding.edtBaseCurrency.text
                 binding.edtBaseCurrency.text = exchange
-
                 swipe = true
             }
         }
@@ -132,7 +126,6 @@ class ConvertCurrencyFragment : Fragment() {
         binding.btnCalculate.setOnClickListener {
             convert()
         }
-
 
         binding.edtBaseCurrency.doAfterTextChanged {
             try {
@@ -146,9 +139,7 @@ class ConvertCurrencyFragment : Fragment() {
             } catch (e: Exception) {
                 Logger.d(e.toString())
             }
-
         }
-
     }
 
     private fun convert() {
@@ -169,7 +160,6 @@ class ConvertCurrencyFragment : Fragment() {
         }
     }
 
-
     private fun bindObserver() {
         /**
          * Handling different state
@@ -187,7 +177,6 @@ class ConvertCurrencyFragment : Fragment() {
                         }
                     }
                     is Resource.Error -> {
-
                         try {
                             it.errorMessage?.let { it1 -> requireActivity().toast(it1) }
                         } catch (e: Exception) {
@@ -197,7 +186,6 @@ class ConvertCurrencyFragment : Fragment() {
                 }
             }
         }
-
 
         lifecycleScope.launchWhenStarted {
             viewModel.convertUIState.collectLatest {
@@ -260,5 +248,4 @@ class ConvertCurrencyFragment : Fragment() {
         _binding = null
         super.onDestroy()
     }
-
 }
